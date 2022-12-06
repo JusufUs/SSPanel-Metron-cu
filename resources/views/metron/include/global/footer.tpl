@@ -4,7 +4,7 @@
             <span class="text-muted font-weight-bold mr-2">2020©</span>
             <a href="/" target="_blank" class="text-dark-75 text-hover-primary">{$config["appName"]}</a>
         </div>
-        <div class="nav nav-dark order-1 order-md-2" id="theme_copyright">
+        <div class="nav nav-dark order-1 order-md-2" style="display:none;" id="theme_copyright">
         </div>
     </div>
 </div>
