@@ -18,6 +18,10 @@
                                 </div>
                             </div>
                             <div class="d-flex align-items-center">
+                                <a href="javascript:;"
+                                   class="btn {$style[$theme_style]['global']['btn_subheader']}
+                                   font-weight-bold py-3 px-6 mr-4"
+                                   data-toggle="modal" data-target="#exchangeShop">兑换套餐</a>
                                 {if $user->isAbleToCheckin()}
                                     <a href="javascript:;"
                                        class="btn {$style[$theme_style]['global']['btn_subheader']} font-weight-bold py-3 px-6"
@@ -61,7 +65,7 @@
                                                             <strong>{if $user->class_expire!="1989-06-04 00:05:00" && $user->class >= 1}
                                                                     <span class="counter">{$class_left_days}</span>
                                                                     天{elseif $user->class <= 0}
-                                                                    <span class="counter">已过期</span>
+                                                                    <span class="counter">已过期</span>  <a href="/user/shop">续费套餐</a>
                                                                 {else}未知{/if}</strong></div>
                                                         <p class="text-dark-50">会员时长</p>
                                                     </div>
@@ -74,7 +78,7 @@
                                                     {/foreach}
                                                     :
                                                     {if $user->class_expire != "1989-06-04 00:05:00" && $user->class >= 1}
-                                                        {substr($user->class_expire, 0, 10)} 到期
+                                                        {substr($user->class_expire, 0, 10)} 到期  <a href="/user/shop">续费套餐</a>
                                                     {elseif $user->class == 0}
                                                         已过期
                                                     {elseif $user->class == -1}
@@ -145,7 +149,7 @@
                                                             <strong>{$user->online_ip_count()}
                                                                 / {if $user->node_connector == 0}无限制{else}{$user->node_connector}{/if}</strong>
                                                         </div>
-                                                        <p class="text-dark-50">在线设备</p>
+                                                        <p class="text-dark-50">在线设备(非实时)</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -232,7 +236,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- 节点流量统计 -->
+                                        <!-- 节点流量统计
                                         <div class="card card-custom gutter-b {$metron['style_shadow']}"
                                              id="index-NodeTrafficChart-card">
                                             <div class="card-header border-0 pt-5">
@@ -253,7 +257,7 @@
                                                     <h3 class="display-5 text-muted">暂无记录</h3>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                     </div>
 
@@ -269,7 +273,8 @@
                                     <div class="col-12">
                                         <div class="card">
                                             <div class="card-body">
-                                                <h3 class="animated tada mt-5 text-center" style="color:#191d21;font-size: 2rem;">👋
+                                                <h3 class="animated tada mt-5 text-center"
+                                                    style="color:#191d21;font-size: 2rem;">👋
                                                     Hi, {$user->user_name}</h3>
                                                 <h5 class="mb-5 mt-2 text-center"
                                                     style="color:#191d21d5">按照下面步骤开始使用吧!</h5>
@@ -279,14 +284,15 @@
                                                             <div class="wizard-step wizard-step-active"
                                                                  onclick="location='/user/shop'">
                                                                 <div class="wizard-step-icon">
-                                                                    <i class="fas fa-shopping-cart" style="color: #fff;"></i>
+                                                                    <i class="fas fa-shopping-cart"
+                                                                       style="color: #fff;"></i>
                                                                 </div>
                                                                 <div class="wizard-step-label">
-                                                                    前往商店购买会员订阅计划或免费试用
+                                                                    前往商店购买会员订阅
                                                                 </div>
                                                             </div>
                                                             <div class="wizard-step wizard-step-active"
-                                                                 onclick="location='/user/help'">
+                                                                 onclick="location='/doc'">
                                                                 <div class="wizard-step-icon">
                                                                     <i class="fas fa-download" style="color: #fff;"></i>
                                                                 </div>
@@ -296,7 +302,8 @@
                                                             </div>
                                                             <div class="wizard-step wizard-step-success">
                                                                 <div class="wizard-step-icon">
-                                                                    <i class="fas fa-grin-squint" style="color: #fff;"></i>
+                                                                    <i class="fas fa-grin-squint"
+                                                                       style="color: #fff;"></i>
                                                                 </div>
                                                                 <div class="wizard-step-label">
                                                                     开开心心看世界
@@ -339,6 +346,25 @@
         </div>
     </div>
 
+    <div class="modal fade" id="exchangeShop" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title {$style[$theme_style]['modal']['text_title']}" id="metronpay-title"><strong>输入套餐码</strong>
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <input id="exchange_code" type="text" class="form-control" placeholder="请输入您的套餐码">
+                    <div id="exchange-feedback" class="invalid-feedback"></div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button onclick="exchangeShop()" type="button" class="btn btn-primary">立即兑换</button>
+                    <button onclick="cancelExchange()" type="button" class="btn btn-secondary" data-dismiss="modal">取消
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     {if $metron['advanceResetFlow'] === true}
         <div class="modal fade" id="advanceResetFlow-modal" data-backdrop="static" tabindex="-1" role="dialog"
              aria-labelledby="advanceResetFlow-modal-title" aria-hidden="true">
@@ -402,6 +428,34 @@
         {if $user->class == 0}
         $('#userClassExpire').modal()
         {/if}
+        function exchangeShop() {
+            var code = $('#exchange_code').val();
+            if (code == '') {
+                $('#exchange-feedback').text('请输入兑换码');
+                $('#exchange-feedback').show();
+                return false;
+            }
+            $.ajax({
+                'type': 'POST',
+                'url': '/user/exchange_check',
+                'dataType': 'json',
+                'data': { 'exchange_code' : code },
+                'success': res => {
+                    if (res.ret) {
+                        swal.fire("兑换成功", '',"success");
+                    } else {
+                        $('#exchange-feedback').text(res.msg);
+                        $('#exchange-feedback').show();
+                    }
+                }
+            });
+        }
+
+        function cancelExchange() {
+            $('#exchange_code').val('');
+            $('#exchange-feedback').hide();
+            $('#exchangeShop').hide();
+        }
         {if $user->class > 0 && substr($user->unusedTraffic(),0,-2) > 0 && ((substr($user->unusedTraffic(),0,-2) <= 5 && substr($user->unusedTraffic(),-2) == 'GB') || (substr($user->unusedTraffic(),0,-2) <= 1024 && substr($user->unusedTraffic(),-2) == 'MB'))}
         $('#index-alert').append('\
                 <div class="alert alert-custom alert-white alert-shadow fade mb-8 show {$metron['style_shadow']}" role="alert">\
