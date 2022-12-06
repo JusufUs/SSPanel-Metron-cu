@@ -294,11 +294,14 @@ return function (SlimApp $app) {
         $this->post('/user/create',             App\Controllers\Admin\UserController::class . ':createNewUser');
         $this->post('/user/buy',                App\Controllers\Admin\UserController::class . ':buy');
 
-
         $this->get('/coupon',                   App\Controllers\AdminController::class . ':coupon');
         $this->post('/coupon',                  App\Controllers\AdminController::class . ':addCoupon');
         $this->post('/coupon/ajax',             App\Controllers\AdminController::class . ':ajax_coupon');
 
+        $this->get('/exchangeCode', App\Controllers\AdminController::class . ':exchangeCode');
+        $this->post('/exchangeCode', App\Controllers\AdminController::class . ':addExchange');
+        $this->post('/exchangeCode/ajax', App\Controllers\AdminController::class . ':ajax_exchange_code');
+        
         $this->get('/profile',                  App\Controllers\AdminController::class . ':profile');
         $this->get('/invite',                   App\Controllers\AdminController::class . ':invite');
         $this->post('/invite',                  App\Controllers\AdminController::class . ':addInvite');
