@@ -198,7 +198,7 @@ class Job extends Command
             }
         }
         echo '重置用户流量成功;' . PHP_EOL;
-        
+
         $stream_opts = [
             "ssl" => [
                 "verify_peer"=>false,
@@ -206,6 +206,7 @@ class Job extends Command
             ]
         ];
         $qqwry = file_get_contents('http://qqwry.mirror.noc.one/QQWry.Dat?from=sspanel_uim', false, stream_context_create($stream_opts));
+        
         if ($qqwry != '') {
             rename(BASE_PATH . '/storage/qqwry.dat', BASE_PATH . '/storage/qqwry.dat.bak');
             $fp = fopen(BASE_PATH . '/storage/qqwry.dat', 'wb');
@@ -825,22 +826,21 @@ class Job extends Command
         $txt = '1';
         fwrite($myfile, $txt);
         fclose($myfile);
-        // 分块处理，节省内存
-        EmailQueue::chunkById(500, function ($email_queues) {
-            foreach ($email_queues as $email_queue) {
-                try {
-                    if (filter_var($email_queue->to_email, FILTER_VALIDATE_EMAIL)) {
-                        Mail::send($email_queue->to_email, $email_queue->subject, $email_queue->template, json_decode($email_queue->array), []);
-                        echo "[{$email_queue->to_email}] - 发送成功" . PHP_EOL;
-                    } else {
-                        echo "[{$email_queue->to_email}] - 不是有效的邮箱格式" . PHP_EOL;
-                    }
-                } catch (Exception $e) {
-                    echo $e->getMessage();
+        $email_queues = EmailQueue::query()->limit($_ENV['email_queue_limit'])->get();
+        foreach ($email_queues as $email_queue){
+            try {
+                if (filter_var($email_queue->to_email, FILTER_VALIDATE_EMAIL)) {
+                    Mail::send($email_queue->to_email, $email_queue->subject, $email_queue->template, json_decode($email_queue->array), []);
+                    echo "[{$email_queue->to_email}] - 发送成功" . PHP_EOL;
+                } else {
+                    echo "[{$email_queue->to_email}] - 不是有效的邮箱格式" . PHP_EOL;
                 }
-                $email_queue->delete();
+            } catch (Exception $e) {
+                echo $e->getMessage();
             }
-        });
+            EmailQueue::query()->where('id', $email_queue->id)->delete();
+            sleep(3);
+        }
         unlink(BASE_PATH . '/storage/email_queue');
     }
 
