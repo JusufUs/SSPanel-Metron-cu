@@ -198,14 +198,8 @@ class Job extends Command
             }
         }
         echo '重置用户流量成功;' . PHP_EOL;
-        
-        $stream_opts = [
-            "ssl" => [
-                "verify_peer"=>false,
-                "verify_peer_name"=>false,
-            ]
-        ];
-        $qqwry = file_get_contents('http://qqwry.mirror.noc.one/QQWry.Dat?from=sspanel_uim', false, stream_context_create($stream_opts));
+
+        $qqwry = file_get_contents('http://qqwry.mirror.noc.one/QQWry.Dat?from=sspanel_uim');
         if ($qqwry != '') {
             rename(BASE_PATH . '/storage/qqwry.dat', BASE_PATH . '/storage/qqwry.dat.bak');
             $fp = fopen(BASE_PATH . '/storage/qqwry.dat', 'wb');
