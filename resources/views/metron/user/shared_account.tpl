@@ -24,6 +24,15 @@
 
                         <div class="d-flex flex-column-fluid">
                             <div class="container">
+                                        <div class="card card-custom gutter-b rounded-xl shadow-lg">
+                                            <div class="card-body mt-4">
+                                            <p>注意：只需要在APPSTORE里登陆，不要在设置里登陆，否则锁机自负！</p>
+                                            <p>注意：登陆时不要绑定自己手机号，请一定选择其他选项-不升级！</p>
+                                            <p>注意：小火箭APP正常使用请不要更新或重装，因为更新并不一定会变好！</p>
+                                            <p>长期需要使用外区ID的话建议去 shop.607777.xyz 自己几块钱买个账号</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 {$css = [
                                     1 => 'primary', 
                                     2 => 'success', 
