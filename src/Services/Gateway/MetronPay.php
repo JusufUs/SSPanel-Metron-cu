@@ -133,6 +133,91 @@ class MetronPay extends AbstractPayment
                         );
                     }
                     return json_encode($return);
+                case ('epay2'):
+                    $epay = new Epay2();
+                    $result = $epay->MetronPay($type, $price, $shopinfo, $paylist_id);
+                    if ($result['errcode'] === 0) {
+                        $return = array(
+                            'ret' => 1,
+                            'type' => 'url',
+                            'tradeno' => $result['tradeno'],
+                            'url' => $result['code']
+                        );
+                    } else {
+                        $return = array(
+                            'ret' => 0,
+                            'msg' => $result['errmsg']
+                        );
+                    }
+                    return json_encode($return);
+                case ('epay3'):
+                    $epay = new Epay3();
+                    $result = $epay->MetronPay($type, $price, $shopinfo, $paylist_id);
+                    if ($result['errcode'] === 0) {
+                        $return = array(
+                            'ret' => 1,
+                            'type' => 'url',
+                            'tradeno' => $result['tradeno'],
+                            'url' => $result['code']
+                        );
+                    } else {
+                        $return = array(
+                            'ret' => 0,
+                            'msg' => $result['errmsg']
+                        );
+                    }
+                    return json_encode($return);
+                case ('epay4'):
+                    $epay = new Epay4();
+                    $result = $epay->MetronPay($type, $price, $shopinfo, $paylist_id);
+                    if ($result['errcode'] === 0) {
+                        $return = array(
+                            'ret' => 1,
+                            'type' => 'url',
+                            'tradeno' => $result['tradeno'],
+                            'url' => $result['code']
+                        );
+                    } else {
+                        $return = array(
+                            'ret' => 0,
+                            'msg' => $result['errmsg']
+                        );
+                    }
+                    return json_encode($return);
+                case ('epay5'):
+                    $epay = new Epay5();
+                    $result = $epay->MetronPay($type, $price, $shopinfo, $paylist_id);
+                    if ($result['errcode'] === 0) {
+                        $return = array(
+                            'ret' => 1,
+                            'type' => 'url',
+                            'tradeno' => $result['tradeno'],
+                            'url' => $result['code']
+                        );
+                    } else {
+                        $return = array(
+                            'ret' => 0,
+                            'msg' => $result['errmsg']
+                        );
+                    }
+                    return json_encode($return);
+                case ('SPEEDPay'):
+                    $SPEEDPay = new SPEEDPay();
+                    $result = $SPEEDPay->MetronPay($type, $price, $shopinfo, $paylist_id);
+                    if ($result['errcode'] === 0) {
+                        $return = array(
+                            'ret' => 1,
+                            'type' => 'url',
+                            'tradeno' => $result['pid'],
+                            'url' => $result['url']
+                        );
+                    } else {
+                        $return = array(
+                            'ret' => 0,
+                            'msg' => $result['errmsg']
+                        );
+                    }
+                    return json_encode($return);
                 case ('f2fpay'):
                     $f2fpay = new AopF2F();
                     $result = $f2fpay->MetronPay($type, $price, $shopinfo, $paylist_id);
@@ -175,6 +260,27 @@ class MetronPay extends AbstractPayment
                         );
                     }
                     return json_encode($return);
+                case ('wellpay'):
+                   
+                    $mgate = new WellPay($_ENV['wellpay_app_secret']);
+                    $result = $mgate->MetronPay($type, $price, $shopinfo, $paylist_id);
+                    
+                    if(((isset($result['code']) && $result['code'] === 0)||
+                    isset($result['errcode']) && $result['errcode'] === 0))
+                    {
+                        $return = array(
+                            'ret' => 1,
+                            'type' => 'url',
+                            'tradeno' => $result['pid'],
+                            'url' => $result['url']
+                        );
+                    } else {
+                        $return = array(
+                            'ret' => 0,
+                            'msg' => $result['errmsg']
+                        );
+                    }
+                    return json_encode($return);
                 case ('theadpay'):
                     $theadpay = new THeadPay();
                     $result = $theadpay->MetronPay($type, $price, $shopinfo, $paylist_id);
@@ -199,23 +305,6 @@ class MetronPay extends AbstractPayment
                         $return = array(
                             'ret' => 1,
                             'type' => 'qrcode',
-                            'tradeno' => $result['pid'],
-                            'url' => $result['url']
-                        );
-                    } else {
-                        $return = array(
-                            'ret' => 0,
-                            'msg' => $result['errmsg']
-                        );
-                    }
-                    return json_encode($return);
-                case ('alpha'):
-                    $alpha = new AlphaPay();
-                    $result = $alpha->MetronPay($type, $price, $shopinfo, $paylist_id);
-                    if ($result['errcode'] == 0) {
-                        $return = array(
-                            'ret' => 1,
-                            'type' => 'url',
                             'tradeno' => $result['pid'],
                             'url' => $result['url']
                         );
@@ -274,6 +363,23 @@ class MetronPay extends AbstractPayment
                         );
                     }
                     return json_encode($return);
+                case ('SPEEDPay'):
+                    $SPEEDPay = new SPEEDPay();
+                    $result = $SPEEDPay->MetronPay($type, $price, $shopinfo, $paylist_id);
+                    if ($result['errcode'] === 0) {
+                        $return = array(
+                            'ret' => 1,
+                            'type' => 'url',
+                            'tradeno' => $result['pid'],
+                            'url' => $result['url']
+                        );
+                    } else {
+                        $return = array(
+                            'ret' => 0,
+                            'msg' => $result['errmsg']
+                        );
+                    }
+                    return json_encode($return);    
                 case ('wolfpay_ur'):
                     if ($paylist_id == 0 && $price < 3) {
                         return json_encode(['ret' => 0, 'msg' => '支付系统限制金额需大于3元']);
@@ -383,6 +489,24 @@ class MetronPay extends AbstractPayment
                         );
                     }
                     return json_encode($return);
+                    break;
+                case ('wellpay'):
+                    $mgate = new WellPay($_ENV['wellpay_app_secret']);
+                    $result = $mgate->MetronPay($type, $price, $shopinfo, $paylist_id);
+                    if ($result['errcode'] === 0) {
+                        $return = array(
+                            'ret' => 1,
+                            'type' => 'url',
+                            'tradeno' => $result['pid'],
+                            'url' => $result['url']
+                        );
+                    } else {
+                        $return = array(
+                            'ret' => 0,
+                            'msg' => $result['errmsg']
+                        );
+                    }
+                    return json_encode($return);
                 case ('epay'):
                     $epay = new Epay();
                     $result = $epay->MetronPay($type, $price, $shopinfo, $paylist_id);
@@ -400,16 +524,66 @@ class MetronPay extends AbstractPayment
                         );
                     }
                     return json_encode($return);
-                case ('alpha'):
-                    $type = 'wechat';
-                    $alpha = new AlphaPay();
-                    $result = $alpha->MetronPay($type, $price, $shopinfo, $paylist_id);
-                    if ($result['errcode'] == 0) {
+                case ('epay2'):
+                    $epay = new Epay2();
+                    $result = $epay->MetronPay($type, $price, $shopinfo, $paylist_id);
+                    if ($result['errcode'] === 0) {
                         $return = array(
                             'ret' => 1,
                             'type' => 'url',
-                            'tradeno' => $result['pid'],
-                            'url' => $result['url']
+                            'tradeno' => $result['tradeno'],
+                            'url' => $result['code']
+                        );
+                    } else {
+                        $return = array(
+                            'ret' => 0,
+                            'msg' => $result['errmsg']
+                        );
+                    }
+                    return json_encode($return);
+                case ('epay3'):
+                    $epay = new Epay3();
+                    $result = $epay->MetronPay($type, $price, $shopinfo, $paylist_id);
+                    if ($result['errcode'] === 0) {
+                        $return = array(
+                            'ret' => 1,
+                            'type' => 'url',
+                            'tradeno' => $result['tradeno'],
+                            'url' => $result['code']
+                        );
+                    } else {
+                        $return = array(
+                            'ret' => 0,
+                            'msg' => $result['errmsg']
+                        );
+                    }
+                    return json_encode($return);
+                case ('epay4'):
+                    $epay = new Epay4();
+                    $result = $epay->MetronPay($type, $price, $shopinfo, $paylist_id);
+                    if ($result['errcode'] === 0) {
+                        $return = array(
+                            'ret' => 1,
+                            'type' => 'url',
+                            'tradeno' => $result['tradeno'],
+                            'url' => $result['code']
+                        );
+                    } else {
+                        $return = array(
+                            'ret' => 0,
+                            'msg' => $result['errmsg']
+                        );
+                    }
+                    return json_encode($return);
+                case ('epay5'):
+                    $epay = new Epay5();
+                    $result = $epay->MetronPay($type, $price, $shopinfo, $paylist_id);
+                    if ($result['errcode'] === 0) {
+                        $return = array(
+                            'ret' => 1,
+                            'type' => 'url',
+                            'tradeno' => $result['tradeno'],
+                            'url' => $result['code']
                         );
                     } else {
                         $return = array(
@@ -450,13 +624,9 @@ class MetronPay extends AbstractPayment
                         );
                     }
                     return json_encode($return);
-                case ('wolfpay_ur'):
-                    if ($paylist_id == 0 && $price < 3) {
-                        return json_encode(['ret' => 0, 'msg' => '支付系统限制金额需大于3元']);
-                    }
-                    $isqr = 'url';
-                    $wolfpay = new wolfpay();
-                    $result = $wolfpay->MetronPay($type, $price, $shopinfo, $paylist_id, $isqr);
+                case ('SPEEDPay'):
+                    $SPEEDPay = new SPEEDPay();
+                    $result = $SPEEDPay->MetronPay($type, $price, $shopinfo, $paylist_id);
                     if ($result['errcode'] === 0) {
                         $return = array(
                             'ret' => 1,
@@ -471,10 +641,14 @@ class MetronPay extends AbstractPayment
                         );
                     }
                     return json_encode($return);
-                case ('alpha'):
-                    $alpha = new AlphaPay();
-                    $result = $alpha->MetronPay($type, $price, $shopinfo, $paylist_id);
-                    if ($result['errcode'] == 0) {
+                case ('wolfpay_ur'):
+                    if ($paylist_id == 0 && $price < 3) {
+                        return json_encode(['ret' => 0, 'msg' => '支付系统限制金额需大于3元']);
+                    }
+                    $isqr = 'url';
+                    $wolfpay = new wolfpay();
+                    $result = $wolfpay->MetronPay($type, $price, $shopinfo, $paylist_id, $isqr);
+                    if ($result['errcode'] === 0) {
                         $return = array(
                             'ret' => 1,
                             'type' => 'url',
@@ -516,15 +690,15 @@ class MetronPay extends AbstractPayment
                         );
                     }
                     return json_encode($return);
-                case ('alpha'):
-                    $alpha = new AlphaPay();
-                    $result = $alpha->MetronPay('USDT', $price, $shopinfo, $paylist_id);
-                    if ($result['errcode'] == 0) {
+                case ('epay3'):
+                    $epay = new Epay3();
+                    $result = $epay->MetronPay($type, $price, $shopinfo, $paylist_id);
+                    if ($result['errcode'] === 0) {
                         $return = array(
                             'ret' => 1,
                             'type' => 'url',
-                            'tradeno' => $result['pid'],
-                            'url' => $result['url']
+                            'tradeno' => $result['tradeno'],
+                            'url' => $result['code']
                         );
                     } else {
                         $return = array(
@@ -666,6 +840,10 @@ class MetronPay extends AbstractPayment
                 $mgate = new MGate();
                 $mgate->notify($request, $response, $args);
                 return;
+            case ('wellpay'):
+                $mgate = new WellPay($_ENV['wellpay_app_secret']);
+                $mgate->notify($request, $response, $args);
+                return;
             case ('theadpay'):
                 $notify = new THeadPay();
                 $notify->notify($request, $response, $args);
@@ -674,14 +852,31 @@ class MetronPay extends AbstractPayment
                 $tron = new BobTronPay();
                 $tron->notify($request, $response, $args);
                 return;
-            case ('alpha'):
-                $tron = new AlphaPay();
-                $tron->notify($request, $response, $args);
+            case ('SPEEDPay'):
+                    $SPEEDPay = new SPEEDPay();
+                    $result = $SPEEDPay->notify($request, $response, $args);
+                    return;    
+            case ('epay2'):
+                $epay = new Epay2();
+                $epay->notify($request, $response, $args);
+                return;
+            case ('epay3'):
+                $epay = new Epay3();
+                $epay->notify($request, $response, $args);
+                return;
+            case ('epay4'):
+                $epay = new Epay4();
+                $epay->notify($request, $response, $args);
+                return;
+            case ('epay5'):
+                $epay = new Epay5();
+                $epay->notify($request, $response, $args);
                 return;
             default:
                 return 'failed';
         }
     }
+        
 
     public function getPurchaseHTML()
     {
