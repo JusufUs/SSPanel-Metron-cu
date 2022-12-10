@@ -445,11 +445,29 @@ class UserController extends BaseController
         if ($opts['os'] == 'faq') {
             return $this->view()->display('user/tutorial/faq.tpl');
         }
+        $appid_id = [];
+        $stream_opts = [
+            "ssl" => [
+                "verify_peer"=>false,
+                "verify_peer_name"=>false,
+            ]
+        ];
+        $appleId_url = "http://你的域名/getInfo/all_id?p=密码";
+        $content = file_get_contents($appleId_url, false, stream_context_create($stream_opts));
+        if ($content){
+            $accounts = json_decode($content, true)['account'];
+            $rand = random_int(0, count($accounts) - 1);
+            $appid_id[0] = $accounts[$rand]['username'];
+            $appid_id[1] = $accounts[$rand]['password'];
+            $appid_id[2] = "更新时间：".$accounts[$rand]['update_time'];
+        }
+
         $opts['os'] = str_replace(' ','',$opts['os']);
         $opts['client'] = str_replace(' ','',$opts['client']);
         if ($opts['os'] != '' && $opts['client'] != '') {
             $url = 'user/tutorial/'.$opts['os'].'/'.$opts['client'].'.tpl';
             return $this->view()
+                ->assign('apple_id', $appid_id)
                 ->assign('subInfo', LinkController::getSubinfo($this->user, 0))
                 ->assign('mergeSub', Config::get('mergeSub'))
                 ->assign('subUrl', Config::get('subUrl'))
