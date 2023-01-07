@@ -86,16 +86,6 @@
         </div>
         {include file='include/global/scripts.tpl'}
 
-<div class="web_notice" style="    position: fixed;    top: 0;    left: 0;    width: 100%;    height: 100%; background: rgba(0,0,0,0.3);    z-index: 99999;">
-<div style="    position: fixed;    top: 50%;    left: 50%;    width: 380px;    background: #FFF;    transform: translate(-50%, -50%);    border-radius: 40px;    padding: 50px 40px;">
-<h3 style="    font-weight: bold;    text-align: center;    font-size: 26px;">发送工单须知</h3>
-<div style="    font-size: 16px;    margin-top: 26px;    line-height: 26px;    color: #999;">1.这里是最高级别的客户服务，可以处理任何右下角客服无法处理的投诉和建议<br />
-2.为了更快解决问题，请务必详细描述问题。这里没有神仙，不要就发一句不能用，用不了等，否则我们可以不处理！<br />
-3.软件使用下载等常见问题请先看使用教程，教程里没有的请联系网址右下角人工客服，实时在线解决。<br /><br />
-<br /><a style="    display: block;    background: #98a3ff;    color: #FFF;    text-align: center;    font-weight: bold;    font-size: 14px;    line-height: 36px;    margin: 0 auto;   margin-top: 26px;    border-radius: 32px;    width: 80%;" onclick="javascript:document.querySelector('.web_notice').remove()">我知道了</ a>
-</div>
-</div>
-
 <!-- modal -->
 <div class="modal fade" id="ticket-create-modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -121,6 +111,16 @@
             </form>
         </div>
     </div>
+</div>
+
+<div class="web_notice" style="    position: fixed;    top: 0;    left: 0;    width: 100%;    height: 100%; background: rgba(0,0,0,0.3);    z-index: 99999;">
+<div style="    position: fixed;    top: 50%;    left: 50%;    width: 380px;    background: #FFF;    transform: translate(-50%, -50%);    border-radius: 40px;    padding: 50px 40px;">
+<h3 style="    font-weight: bold;    text-align: center;    font-size: 26px;">发送工单须知</h3>
+<div style="    font-size: 16px;    margin-top: 26px;    line-height: 26px;    color: #999;">1.这里是最高级别的客户服务，可以处理任何右下角客服无法处理的投诉和建议<br />
+2.为了更快解决问题，请务必详细描述问题。这里没有神仙，不要就发一句不能用，用不了等，否则我们可以不处理！<br />
+3.软件使用下载等常见问题请先看使用教程，教程里没有的请联系网址右下角人工客服，实时在线解决。<br /><br />
+<br /><a style="    display: block;    background: #98a3ff;    color: #FFF;    text-align: center;    font-weight: bold;    font-size: 14px;    line-height: 36px;    margin: 0 auto;   margin-top: 26px;    border-radius: 32px;    width: 80%;" onclick="javascript:document.querySelector('.web_notice').remove()">我知道了</ a>
+</div>
 </div>
 
     </body>
