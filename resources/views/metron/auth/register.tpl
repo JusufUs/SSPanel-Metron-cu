@@ -54,7 +54,7 @@
                                     {if $config['enable_email_verify'] == 'true'}
                                     <div class="form-group mb-0" style="white-space:nowrap;">
                                         <div class="input-group mt-5">
-                                            <input class="form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-l-50 border-0 py-4 px-8 pr-0" type="text" placeholder="邮箱验证码" name="email_code" id="email_code" autocomplete="new-password" />
+                                            <input class="form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-l-50 border-0 py-4 px-8 pr-0" type="text" placeholder="邮箱验证码(可能在垃圾箱)" name="email_code" id="email_code" autocomplete="new-password" />
                                             <div class="input-group-append ml-0">
                                                 <button type="button" class="btn btn-pill btn-outline-code font-weight-bold pr-5 opacity-70 bg-dark-o-70" id="send_email" onclick="sendMail()">获取验证码</button>
                                             </div>
