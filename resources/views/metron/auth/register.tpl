@@ -90,7 +90,7 @@
                                 {/if}
                                 <div class="form-group d-flex flex-wrap justify-content-between align-items-center px-5">
                                     <label class="checkbox checkbox-outline checkbox-white text-white m-0">
-                                        <input type="checkbox" id="agree" name="agree"/>注册即代表同意 <a class="text-white font-weight-bold" data-toggle="modal" data-target="#tos-modal"><strong>服务条款</strong></a>
+                                        <input type="checkbox" checked="checked" id="agree" name="agree"/>注册即代表同意 <a class="text-white font-weight-bold" data-toggle="modal" data-target="#tos-modal"><strong>服务条款</strong></a>
                                         <span></span>
                                     </label>
                                 </div>
