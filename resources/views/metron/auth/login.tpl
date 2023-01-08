@@ -42,8 +42,8 @@
                                 </div>
                                 <div class="form-group text-center mt-10" style="white-space:nowrap;">
                                     <button type="button" id="login_submit" class="btn btn-pill btn-outline-white font-weight-bold opacity-90 px-15 py-3">登录</button>
-                                    <span class="m-3">或</span>
-                                    <a class="btn btn-pill btn-outline-white font-weight-bold opacity-90 px-15 py-3" data-toggle="modal" data-target="#telegram-login-modal">使用 Telegram 登录</a>
+<!--                                    <span class="m-3">或</span>
+                                    <a class="btn btn-pill btn-outline-white font-weight-bold opacity-90 px-15 py-3" data-toggle="modal" data-target="#telegram-login-modal">使用 Telegram 登录</a> -->
                                 </div>
                             </form>
                             <div class="mt-10">
