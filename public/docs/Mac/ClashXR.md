@@ -2,7 +2,7 @@
 
 ## 下载程序
 
-网盘下载: https://wwm.lanzouw.com/iCPNY01rq5ch 密码:66ww
+网盘下载: [https://wwm.lanzouw.com/iCPNY01rq5ch](https://wwoj.lanzouw.com/b02w4479e) 密码:66ww
 
 备用下载: https://install.appcenter.ms/users/clashx/apps/clashx-pro/distribution_groups/public
 
