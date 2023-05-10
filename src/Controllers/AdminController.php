@@ -320,6 +320,69 @@ class AdminController extends UserController
         return $response->getBody()->write(json_encode($res));
     }
 
+
+    public function exchangeCode($request, $response, $args)
+    {
+        $table_config['total_column'] = array('id' => 'ID', 'code' => '套餐码',
+            'shop_id' => '限定商品ID', 'status' => '状态', 'user_name' => '用户名称');
+        $table_config['default_show_column'] = array();
+        foreach ($table_config['total_column'] as $column => $value) {
+            $table_config['default_show_column'][] = $column;
+        }
+        $table_config['ajax_url'] = 'exchangeCode/ajax';
+        $shops = Shop::where('status', 1)->orderBy('name')->get();
+        return $this->view()->assign('table_config', $table_config)->assign('shops',$shops)->display('admin/exchange_code.tpl');
+    }
+
+    public function addExchange($request, $response, $args)
+    {
+        $code = new ExchangeCode();
+        $shop_id = $request->getParam('shop_id');
+        $number = $request->getParam('number');
+        $maxId = ExchangeCode::query()->orderBy('id','desc')->first()->id ?? 1;
+
+        if (!$shop_id){
+            $res['ret'] = -1;
+            $res['msg'] = '请选择套餐';
+            return $response->getBody()->write(json_encode($res));
+        }
+        $data = [];
+        for ($i=1;$i<=$number;$i++){
+            $data[] = [
+                'code'=>$this->randomStr(3).($maxId+$i).$this->randomStr(3),
+                'shop_id'=>$shop_id,
+                'status'=>1,
+            ];
+        }
+        $code::query()->insert($data);
+        $res['ret'] = 1;
+        $res['msg'] = '套餐码添加成功';
+        return $response->getBody()->write(json_encode($res));
+    }
+
+    public function randomStr($length = 8)
+    {
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $str = '';
+        for($i = 0; $i < $length; $i++) {
+            $str .= $chars[mt_rand(0, strlen($chars) - 1)];
+        }
+        return $str;
+    }
+
+    public function ajax_exchange_code($request, $response, $args)
+    {
+        $datatables = new Datatables(new DatatablesHelper());
+        $datatables->query('Select code.id,code.code,code.shop_id,code.status,user.user_name from exchange_code as code left join user as user on code.user_id=user.id');
+
+        $datatables->edit('status', static function ($data) {
+            return $data['status'] == 1 ? '未使用':'已使用';
+        });
+
+        $body = $response->getBody();
+        $body->write($datatables->generate());
+    }
+        
     public function getNodeTraffic($request, $response, $args)
     {
         $logs = Manager::connection()->select('SELECT *,(SUM(u) + SUM(d)) as sum_ud FROM `user_traffic_log` GROUP BY node_id ORDER BY sum_ud DESC LIMIT 0,10');
